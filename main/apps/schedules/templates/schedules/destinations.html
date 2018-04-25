@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>PY Belt</title>
+      {% load staticfiles %}
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="{% static 'schedules/css/stylesheet.css' %}">
+   </head>
+   <div class="container">
+      <header>
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'schedules:home' %}">Home</a></li>
+            <li><a href="{% url 'users:logout' %}">Logout</a></li>
+         </ul>
+      </header>
+      <body>
+         <div class="wrapper">
+            {% if messages %}
+               {% for message in messages %}
+               <div class="alert alert-info" role="alert">
+                  <p>{{  message  }}</p>
+               </div>
+               {% endfor %}
+            {% endif %}
+
+            <div class="row">
+            <div class="col-md-6">
+            {% for trip in trips %}
+            <h2>{{  trip.destination  }}</h2>
+            <ul>
+               <li>Planned By: {{  trip.user_creator.name  }}</li>
+               <li>Description: {{  trip.description  }}</li>
+               <li>Travel Date From: {{  trip.date_from  }}</li>
+               <li>Travel Date To: {{  trip.date_to  }}</li>
+            </ul>
+            <br><br>
+            <h2>Other users' joining the trip:</h2>
+            <ul>
+               {% for user in trip.user_joiner.all %}
+                  <li>{{  user.name  }}</li>
+               {% endfor %}
+            {% endfor %}
+            </ul>
+         </div>
+      </div>
+
+         </div>
+   </body>
+</div>
+</html>

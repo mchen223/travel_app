@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>PY Belt</title>
+      {% load staticfiles %}
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="{% static 'schedules/css/stylesheet.css' %}">
+   </head>
+   <div class="container">
+      <header>
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'schedules:home' %}">Home</a></li>
+            <li><a href="{% url 'users:logout' %}">Logout</a></li>
+         </ul>
+      </header>
+      <body>
+         <div class="wrapper">
+            <h1>Welcome, {{request.session.name}}!</h1>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">
+               <p>{{  message  }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <br>
+            <h4>Your Trip Schedule:</h4>
+            <table class="table table-striped">
+               <thead>
+                  <tr>
+                     <th>Destination</th>
+                     <th>Travel Start Date</th>
+                     <th>Travel End Date</th>
+                     <th>Plan</th>
+                     <th>Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
+               {% for trip in my_trips_created %}
+                  <tr>
+                     <td><a href="{%  url 'schedules:destination' id=trip.id %}"> {{  trip.destination  }}</a></td>
+                     <td>{{  trip.date_from  }}</td>
+                     <td>{{  trip.date_to  }}</td>
+                     <td>{{  trip.description  }}</td>
+                     <td><a href="{%  url 'schedules:delete_trip' id=trip.id %}"> Delete Trip</a></td>
+                  </tr>
+               {% endfor %}
+               {% for trip in my_trips_joined %}
+                  <tr>
+                     <td><a href="{%  url 'schedules:destination' id=trip.id %}"> {{  trip.destination  }}</a></td>
+                     <td>{{  trip.date_from  }}</td>
+                     <td>{{  trip.date_to  }}</td>
+                     <td>{{  trip.description  }}</td>
+                     <td><a href="{%  url 'schedules:leave_trip' id=trip.id %}"> Leave Trip</a></td>
+                  </tr>
+               {% endfor %}
+            </tbody>
+            </table>
+            <br>
+            <h4>Other User's Travel Plans:</h4>
+            <table class="table table-striped">
+               <thead>
+                  <tr>
+                     <th>Name</th>
+                     <th>Destination</th>
+                     <th>Travel Start Date</th>
+                     <th>Travel End Date</th>
+                     <th>Do You Want to Join?</th>
+                  </tr>
+               </thead>
+               <tbody>
+               {% for trip in other_trips %}
+                  <tr>
+                     <td>{{  trip.user_creator.name  }}</th>
+                     <td><a href="{%  url 'schedules:destination' id=trip.id %}"> {{  trip.destination  }}</a></td>
+                     <td>{{  trip.date_from  }}</td>
+                     <td>{{  trip.date_to  }}</td>
+                     <td><a href="{%  url 'schedules:join' id=trip.id  %}">Join</a></td>
+                  </tr>
+               {% endfor %}
+            </tbody>
+            </table>
+         </div>
+      </body>
+      <footer>
+            <a class="nav navbar-nav navbar-right" href="{% url 'schedules:add' %}">Add Travel Plan</a>
+      </footer>
+  </div>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>PY Belt</title>
+      {% load staticfiles %}
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="{% static 'schedules/css/stylesheet.css' %}">
+   </head>
+   <div class="container">
+      <header>
+         <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'schedules:home' %}">Home</a></li>
+            <li><a href="{% url 'users:logout' %}">Logout</a></li>
+         </ul>
+      </header>
+      <body>
+         <div class="wrapper">
+            {% if messages %}
+               {% for message in messages %}
+               <div class="alert alert-info" role="alert">
+                  <p>{{  message  }}</p>
+               </div>
+               {% endfor %}
+            {% endif %}
+
+            <div class="row">
+            <div class="col-md-6">
+
+               <h2>Add a Trip</h2>
+               <form class="" action="{% url 'schedules:add_trip' %}" method="POST">
+                  {% csrf_token %}
+                  <div class="form-group">
+                     <label for="destination">Destination:</label>
+                     <input name="destination" type="text" class="form-control" id="destination" placeholder="">
+                  </div>
+
+                  <div class="form-group">
+                     <label for="description">Description:</label>
+                     <input name="description" type="text" class="form-control" id="description" placeholder="">
+                  </div>
+
+                  <div class="form-group">
+                     <label for="date_from">Travel Date From:</label>
+                     <input name="date_from" type="date" class="form-control" id="date_from">
+                  </div>
+
+                  <div class="form-group">
+                     <label for="date_to">Travel Date To:</label>
+                     <input name="date_to" type="date" class="form-control" id="date_to">
+                  </div>
+                  <br>
+                  <button type="submit" name="Add" class="btn btn-default">Add</button>
+               </form>
+            </div>
+         </div>
+
+            </div>
+      </body>
+   </div>
+</html>

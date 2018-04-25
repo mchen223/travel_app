@@ -1,0 +1,14 @@
+* {
+   margin: 0;
+   padding: 0;
+   }
+
+.border-box {
+   border: 1px solid black;
+   }
+
+h2 {
+   color: black;
+   margin-left: 193px;
+   font-size: 30px;
+   }
